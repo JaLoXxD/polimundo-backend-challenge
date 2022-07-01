@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Resources\ProductCollection;
+use App\Http\Resources\ProductResource;
 use App\Models\Products;
 
 /*
@@ -21,4 +22,8 @@ Route::get('/', function () {
 
 Route::get('/products', function(){
     return new ProductCollection(Products::all());
+});
+
+Route::get('/products/{id}', function($id){
+    return new ProductResource(Products::findOrFail($id));
 });
