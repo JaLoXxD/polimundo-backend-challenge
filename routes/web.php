@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Resources\ProductCollection;
+use App\Models\Products;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/products', function(){
+    return new ProductCollection(Products::all());
 });
