@@ -1,64 +1,61 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Back-End Challenge (Laravel)
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project uses laravel and sail to create a project with docker
 
-## About Laravel
+## Steps to run it in docker
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p>If you are using Linux remember use sudo before any command</p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- First, clone the repository.
+```
+git clone https://github.com/JaLoXxD/polimundo-backend-challenge
+```
+- After that, run docker.
+- Go to the project root folder (polimundo-backend-challenge).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+  ![image](https://user-images.githubusercontent.com/65001908/177014886-36c63b8b-539c-4f1a-b459-1db4726e0bf9.png)
+- Exec this command: 
+ ```
+docker run --rm --interactive --tty -v $(pwd):/app composer install
+ ```
+- Then, exec this command (this will take a while):
+```
+./vendor/bin/sail up
+```
+- Open in the web browser the next url: http://localhost/.
+- If you are using linux probably you will have this error:
 
-## Learning Laravel
+  ![image](https://user-images.githubusercontent.com/65001908/177015044-76734f13-3f72-45cc-9057-ceb9fcc1a89b.png)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- To solve this run this commands:
+```
+sudo chmod o+w ./storage/ -R
+sudo chmod -R 775 storage bootstrap/cache
+```
+- After that, make the migrations
+```
+./vendor/bin/sail artisan migrate
+```
+- Then, open again in the web browser the next url: http://localhost/.
+- If you don't see any error, go to http://localhost/products and then to http://localhost/employees .
+- If you see a response with a empty array please run the seeders.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+   ![image](https://user-images.githubusercontent.com/65001908/177015233-0933961d-5e8f-46dd-a71d-b15ca10a8d48.png)
 
-## Laravel Sponsors
+```
+./vendor/bin/sail artisan db:seed --class=UseProducts
+./vendor/bin/sail artisan db:seed --class=UseEmployee
+```
+-You can also try the following urls http://localhost/employees/{id} , http://localhost/employees/{id} replacing the id field with any of the ids of the data.
+## Results
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Products Routes
 
-### Premium Partners
+![image](https://user-images.githubusercontent.com/65001908/177015384-be5da9e3-e4fe-49e7-bf23-3b0075409678.png)
+![image](https://user-images.githubusercontent.com/65001908/177015389-1ff52099-b7aa-49e9-9a90-3e60521ff964.png)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### Employees routes
 
-## Contributing
+![image](https://user-images.githubusercontent.com/65001908/177015396-e33f1a41-979d-44f3-83d8-79fdadc7222f.png)
+![image](https://user-images.githubusercontent.com/65001908/177015406-bd7f5777-b8d0-4844-a2c8-104a779ea74a.png)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
